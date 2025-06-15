@@ -78,6 +78,7 @@ fn include(asset: &github::GitHubAsset) -> bool {
         && !asset.name.ends_with("-src-crac.tar.gz")
         && !asset.name.ends_with("-src-leyden.tar.gz")
         && !asset.name.contains("-full-nosign")
+        && !asset.browser_download_url.contains("8u192.arm64")
 }
 
 fn map_asset(release: &GitHubRelease, asset: &GitHubAsset, sha1sums: &HashMap<String, String>) -> Result<JvmData> {
