@@ -103,11 +103,7 @@ fn map_asset(asset: &GitHubAsset) -> Result<JvmData> {
         architecture: normalize_architecture(&filename_meta.arch),
         checksum: sha256,
         checksum_url: Some(sha256_url),
-        features: if filename.contains("_alpine") {
-            Some(vec!["musl".to_string()])
-        } else {
-            None
-        },
+        features: normalize_features(&filename),
         filename,
         file_type: filename_meta.ext.clone(),
         image_type: "jdk".to_string(),
@@ -120,6 +116,20 @@ fn map_asset(asset: &GitHubAsset) -> Result<JvmData> {
         version,
         ..Default::default()
     })
+}
+
+fn normalize_features(name: &str) -> Option<Vec<String>> {
+    let mut features = vec![];
+    if name.contains("_alpine") {
+        features.push("musl".to_string());
+    }
+    if name.contains("_Extended") {
+        features.push("extended".to_string());
+    }
+    match features.is_empty() {
+        true => None,
+        false => Some(features),
+    }
 }
 
 fn normalize_release_type(release_type: &str) -> String {
@@ -137,7 +147,7 @@ fn normalize_release_type(release_type: &str) -> String {
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
     debug!("[dragonwell] parsing name: {}", name);
-    if let Some(caps) = regex!(r"^Alibaba_Dragonwell_(?:Standard|Extended)[–_]([0-9\+.]{1,}[^_]*)_(aarch64|riscv64|x64)(?:_alpine)?[-_](Linux|linux|Windows|windows)\.(.*)$").captures(name) {
+    if let Some(caps) = regex!(r"^Alibaba_Dragonwell_(?:Standard|Extended)[-_]([0-9\+.]{1,}[^_]*)_(aarch64|riscv64|x64)(?:_alpine)?[-_](Linux|linux|Windows|windows)\.(.*)$").captures(name) {
       Ok(FileNameMeta {
         java_version: caps.get(1).unwrap().as_str().to_string(),
         version: caps.get(1).unwrap().as_str().to_string(),
