@@ -106,9 +106,14 @@ pub fn md_to_html(md: &str) -> String {
     markdown_to_html(&markdown_input, &options)
 }
 
-/// Extract anchor elements from HTML
+/// Extract anchor elements from HTML using a CSS selector
 pub fn anchors_from_html(html: &str, selector: &str) -> Vec<AnchorElement> {
     let document = Html::parse_document(html);
+    anchors_from_doc(&document, selector)
+}
+
+/// Extract anchor elements from a document using a CSS selector
+pub fn anchors_from_doc(document: &Html, selector: &str) -> Vec<AnchorElement> {
     let a_selector = Selector::parse(selector).unwrap();
     document
         .select(&a_selector)
