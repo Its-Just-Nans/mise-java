@@ -80,11 +80,11 @@ impl Vendor {
                         .collect::<Vec<Map<String, Value>>>();
                     let size = export_data.len();
 
-                    info!("exporting {} records for {}/{}/{}", size, vendor, os, arch);
+                    info!("exporting {size} records for {vendor}/{os}/{arch}");
                     let path = PathBuf::from(&export_path)
                         .join(vendor)
                         .join(os)
-                        .join(format!("{}.json", arch));
+                        .join(format!("{arch}.json"));
                     if let Some(parent) = path.parent() {
                         std::fs::create_dir_all(parent)?;
                     }

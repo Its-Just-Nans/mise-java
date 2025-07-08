@@ -35,7 +35,7 @@ impl Vendor for GraalVM {
             .into_par_iter()
             .flat_map(|release| {
                 map_release(&release).unwrap_or_else(|err| {
-                    warn!("[graalvm] error parsing release: {}", err);
+                    warn!("[graalvm] error parsing release: {err}");
                     vec![]
                 })
             })
@@ -57,7 +57,7 @@ fn map_release(release: &GitHubRelease) -> Result<Vec<JvmData>> {
         .filter_map(|asset| match map_asset(asset) {
             Ok(meta) => Some(meta),
             Err(e) => {
-                warn!("[graalvm] {}", e);
+                warn!("[graalvm] {e}");
                 None
             }
         })
@@ -110,7 +110,7 @@ fn map_ce(asset: &GitHubAsset) -> Result<JvmData> {
 fn map_community(asset: &GitHubAsset) -> Result<JvmData> {
     let sha256_url = format!("{}.sha256", asset.browser_download_url);
     let sha256sum = match HTTP.get_text(&sha256_url) {
-        Ok(sha256) => Some(format!("sha256:{}", sha256)),
+        Ok(sha256) => Some(format!("sha256:{sha256}")),
         Err(_) => {
             warn!("[graalvm] unable to find SHA256 for asset: {}", asset.name);
             None
@@ -144,10 +144,10 @@ fn include(asset: &GitHubAsset) -> bool {
 }
 
 fn meta_from_name_ce(name: &str) -> Result<FileNameMeta> {
-    debug!("[graalvm] parsing name: {}", name);
+    debug!("[graalvm] parsing name: {name}");
     let capture = regex!(r"^graalvm-ce-(?:complete-)?java([0-9]{1,2})-(linux|darwin|windows)-(aarch64|amd64)-([0-9+.]{2,})\.(zip|tar\.gz)$")
         .captures(name)
-        .ok_or_else(|| eyre::eyre!("regular expression did not match name: {}", name))?;
+        .ok_or_else(|| eyre::eyre!("regular expression did not match name: {name}"))?;
 
     let java_version = capture.get(1).unwrap().as_str().to_string();
     let os = capture.get(2).unwrap().as_str().to_string();
@@ -165,10 +165,10 @@ fn meta_from_name_ce(name: &str) -> Result<FileNameMeta> {
 }
 
 fn meta_from_name_community(name: &str) -> Result<FileNameMeta> {
-    debug!("[graalvm] parsing name: {}", name);
+    debug!("[graalvm] parsing name: {name}");
     let capture = regex!(r"^graalvm-community-jdk-([0-9]{1,2}\.[0-9]{1}\.[0-9]{1,3})_(linux|macos|windows)-(aarch64|x64)_bin\.(zip|tar\.gz)$")
       .captures(name)
-      .ok_or_else(|| eyre::eyre!("regular expression did not match name: {}", name))?;
+      .ok_or_else(|| eyre::eyre!("regular expression did not match name: {name}"))?;
 
     let java_version = capture.get(1).unwrap().as_str().to_string();
     let os = capture.get(2).unwrap().as_str().to_string();

@@ -174,7 +174,7 @@ mod tests {
             ),
         ] {
             let actual = JvmData::filter(&jvm_data, filter);
-            assert_eq!(expected, actual, "Expected {} for filter: {:?}", expected, filter);
+            assert_eq!(expected, actual, "Expected {expected} for filter: {filter:?}");
         }
 
         let mut jvm_data_nofeature = jvm_data.clone();

@@ -36,7 +36,7 @@ impl Vendor for Mandrel {
             .into_par_iter()
             .flat_map(|release| {
                 map_release(&release).unwrap_or_else(|err| {
-                    warn!("[mandrel] failed to map release: {}", err);
+                    warn!("[mandrel] failed to map release: {err}");
                     vec![]
                 })
             })
@@ -59,7 +59,7 @@ fn map_release(release: &GitHubRelease) -> Result<Vec<JvmData>> {
         .filter_map(|asset| match map_asset(asset) {
             Ok(meta) => Some(meta),
             Err(e) => {
-                warn!("[mandrel] {}", e);
+                warn!("[mandrel] {e}");
                 None
             }
         })
@@ -126,11 +126,11 @@ fn normalize_release_type(version: &str) -> String {
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[mandrel] parsing name: {}", name);
+    debug!("[mandrel] parsing name: {name}");
     let capture =
         regex!(r"^mandrel-java([0-9]{1,2})-(linux|macos|windows)-(amd64|aarch64)-([0-9+.]{2,}.*)(\.tar\.gz|\.zip)$")
             .captures(name)
-            .ok_or_else(|| eyre::eyre!("regular expression did not match name: {}", name))?;
+            .ok_or_else(|| eyre::eyre!("regular expression did not match name: {name}"))?;
 
     let java_version = capture.get(1).unwrap().as_str().to_string();
     let os = capture.get(2).unwrap().as_str().to_string();

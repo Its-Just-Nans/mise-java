@@ -32,7 +32,7 @@ impl Vendor for Zulu {
               &page={page}",
               page = page, page_size = page_size,
             };
-            debug!("[zulu] fetching packages at {}", api_url);
+            debug!("[zulu] fetching packages at {api_url}");
             match HTTP.get_json::<Vec<Package>, _>(api_url) {
                 Ok(packages) => {
                     all_packages.extend(packages);
@@ -86,10 +86,10 @@ fn map_packages(packages: Vec<Package>) -> Result<Vec<JvmData>> {
 }
 
 fn arch_from_name(name: &str) -> Result<&str> {
-    debug!("[zulu] parsing name: {}", name);
+    debug!("[zulu] parsing name: {name}");
     let capture = regex!(r"^.*[._-](aarch32hf|aarch32sf|aarch64|amd64|arm64|musl_aarch64|i386|i686|musl_x64|ppc32hf|ppc32spe|ppc64|sparcv9|x64|x86_64|x86lx32|x86lx64)\..*$")
         .captures(name)
-        .ok_or_else(|| eyre::eyre!("regular expression failed for name: {}", name))?;
+        .ok_or_else(|| eyre::eyre!("regular expression failed for name: {name}"))?;
 
     let arch = capture.get(1).unwrap().as_str();
     Ok(arch)

@@ -53,7 +53,7 @@ impl Vendor for Jetbrains {
                     match map_release(&release, &a) {
                         Ok(release) => data.push(release),
                         Err(e) => {
-                            error!("[jetbrains] {}", e);
+                            error!("[jetbrains] {e}");
                         }
                     }
                 }
@@ -113,7 +113,7 @@ fn map_release(release: &GitHubRelease, a: &ElementRef<'_>) -> Result<JvmData> {
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[jetbrains] parsing name: {}", name);
+    debug!("[jetbrains] parsing name: {name}");
     let capture = regex!(r"^jbr(sdk)?(?:_\w+)?-([0-9][0-9\+._]{1,})-(linux-musl|linux|osx|macos|windows)-(aarch64|x64|x86)(?:-\w+)?-(b[0-9\+.]{1,})(?:_\w+)?\.(tar\.gz|zip|pkg)$")
         .captures(name)
         .ok_or_else(|| eyre::eyre!("regular expression did not match for {}", name))?;

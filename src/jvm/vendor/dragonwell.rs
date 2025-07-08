@@ -34,13 +34,13 @@ impl Vendor for Dragonwell {
     fn fetch_data(&self, jvm_data: &mut HashSet<JvmData>) -> eyre::Result<()> {
         for version in &["8", "11", "17", "21"] {
             debug!("[dragonwell] fetching releases for version: {version}");
-            let repo = format!("dragonwell-project/dragonwell{}", version);
+            let repo = format!("dragonwell-project/dragonwell{version}");
             let releases = github::list_releases(repo.as_str())?;
             let data = releases
                 .into_par_iter()
                 .flat_map(|release| {
                     map_release(&release).unwrap_or_else(|err| {
-                        warn!("[dragonwell] failed to map release: {}", err);
+                        warn!("[dragonwell] failed to map release: {err}");
                         vec![]
                     })
                 })
@@ -63,7 +63,7 @@ fn map_release(release: &GitHubRelease) -> Result<Vec<JvmData>> {
         .filter_map(|asset| match map_asset(asset) {
             Ok(meta) => Some(meta),
             Err(err) => {
-                warn!("[dragonwell] {}", err);
+                warn!("[dragonwell] {err}");
                 None
             }
         })
@@ -84,7 +84,7 @@ fn map_asset(asset: &GitHubAsset) -> Result<JvmData> {
     let sha256_url = format!("{}.sha256.txt", asset.browser_download_url);
     let sha256 = match HTTP.get_text(&sha256_url) {
         Ok(sha256) => match sha256.split_whitespace().next() {
-            Some(sha256) => Some(format!("sha256:{}", sha256)),
+            Some(sha256) => Some(format!("sha256:{sha256}")),
             None => {
                 warn!("[dragonwell] unable to parse SHA256 for {}", asset.name);
                 None
@@ -146,7 +146,7 @@ fn normalize_release_type(release_type: &str) -> String {
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[dragonwell] parsing name: {}", name);
+    debug!("[dragonwell] parsing name: {name}");
     if let Some(caps) = regex!(r"^Alibaba_Dragonwell_(?:Standard|Extended)[-_]([0-9\+.]{1,}[^_]*)_(aarch64|riscv64|x64)(?:_alpine)?[-_](Linux|linux|Windows|windows)\.(.*)$").captures(name) {
       Ok(FileNameMeta {
         java_version: caps.get(1).unwrap().as_str().to_string(),
@@ -168,7 +168,7 @@ fn meta_from_name(name: &str) -> Result<FileNameMeta> {
     } else if name.starts_with("Alibaba_Dragonwell") {
       let caps = regex!(r"^Alibaba_Dragonwell_([0-9\+.]{1,}[^_-]*)(?:_alpine)?[_-](?:(GA|Experimental|GA_Experimental|FP1)_)?(Linux|linux|Windows|windows)_(aarch64|x64)\.(.*)$")
         .captures(name)
-        .ok_or_else(|| eyre::eyre!("regular expression failed for name: {}", name))?;
+        .ok_or_else(|| eyre::eyre!("regular expression failed for name: {name}"))?;
       Ok(FileNameMeta {
         java_version: caps.get(1).unwrap().as_str().to_string(),
         version: caps.get(1).unwrap().as_str().to_string(),
@@ -180,7 +180,7 @@ fn meta_from_name(name: &str) -> Result<FileNameMeta> {
     } else {
         let caps = regex!(r"^OpenJDK(?:[0-9\+].{1,})_(x64|aarch64)_(linux|windows)_dragonwell_dragonwell-([0-9.]+)(?:_jdk)?[-_]([0-9._]+)-?(ga|.*)\.(tar\.gz|zip)$")
             .captures(name)
-            .ok_or_else(|| eyre::eyre!("regular expression failed for name: {}", name))?;
+            .ok_or_else(|| eyre::eyre!("regular expression failed for name: {name}"))?;
         Ok(FileNameMeta {
             arch: caps.get(1).unwrap().as_str().to_string(),
             os: caps.get(2).unwrap().as_str().to_string(),

@@ -37,7 +37,7 @@ impl Vendor for SAPMachine {
             .into_par_iter()
             .flat_map(|release| {
                 map_release(&release).unwrap_or_else(|err| {
-                    warn!("[sapmachine] failed to map release: {}", err);
+                    warn!("[sapmachine] failed to map release: {err}");
                     vec![]
                 })
             })
@@ -59,7 +59,7 @@ fn map_release(release: &GitHubRelease) -> Result<Vec<JvmData>> {
         .filter_map(|asset| match map_asset(release, asset) {
             Ok(meta) => Some(meta),
             Err(err) => {
-                warn!("[sapmachine] {}", err);
+                warn!("[sapmachine] {err}");
                 None
             }
         })
@@ -145,7 +145,7 @@ fn include(asset: &GitHubAsset) -> bool {
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[sapmachine] parsing name: {}", name);
+    debug!("[sapmachine] parsing name: {name}");
     match name {
         name if name.ends_with(".rpm") => meta_from_name_rpm(name),
         _ => meta_from_name_other(name),

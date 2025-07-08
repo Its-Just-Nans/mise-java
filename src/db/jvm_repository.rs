@@ -206,7 +206,7 @@ impl JvmRepository {
 
     pub fn get_distinct(&self, column: &str) -> Result<Vec<String>> {
         let mut conn = self.pool.get()?;
-        let stmt = conn.prepare(&format!("SELECT DISTINCT {} FROM JVM ORDER BY {} ASC;", column, column))?;
+        let stmt = conn.prepare(&format!("SELECT DISTINCT {column} FROM JVM ORDER BY {column} ASC;"))?;
         let mut data = Vec::new();
         let rows = conn.query(&stmt, &[])?;
         for row in rows {

@@ -215,9 +215,9 @@ fn normalize_major(version: &str) -> String {
         let major = caps.get(1).map_or("", |m| m.as_str());
         let suffix = caps.get(2).map_or("", |m| m.as_str());
         if suffix.is_empty() {
-            format!("{}.0.0", major)
+            format!("{major}.0.0")
         } else {
-            format!("{}.0.0{}", major, suffix)
+            format!("{major}.0.0{suffix}")
         }
     } else {
         version.to_string()
@@ -234,7 +234,7 @@ fn normalize_underline(version: &str) -> String {
     if let Some(caps) = regex!(r"^(([0-9]+_?)+)([-+].+)?$").captures(version) {
         let version_part = caps.get(1).map_or("", |m| m.as_str()).replace('_', ".");
         let suffix = caps.get(3).map_or("", |m| m.as_str());
-        format!("{}{}", version_part, suffix)
+        format!("{version_part}{suffix}")
     } else {
         version.to_string()
     }

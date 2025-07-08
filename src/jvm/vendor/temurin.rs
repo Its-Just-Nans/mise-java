@@ -23,7 +23,7 @@ impl Vendor for Temurin {
         // get available releases
         // https://api.adoptium.net/v3/info/available_releases
         let api_releases_url = "https://api.adoptium.net/v3/info/available_releases";
-        debug!("[temurin] fetching releases [{}]", api_releases_url);
+        debug!("[temurin] fetching releases [{api_releases_url}]");
         let releases = HTTP.get_json::<AvailableReleases, _>(api_releases_url)?;
 
         // get meta data for a specific release
@@ -45,7 +45,7 @@ impl Vendor for Temurin {
                         &vendor=eclipse",
                         page = page, page_size = page_size, release = release,
                     };
-                    debug!("[temurin] fetching release [{}] page [{}]", release, page);
+                    debug!("[temurin] fetching release [{release}] page [{page}]");
                     match HTTP.get_json::<Vec<Release>, _>(api_url) {
                         Ok(resp) => {
                             resp.iter().for_each(|release| {
@@ -58,7 +58,7 @@ impl Vendor for Temurin {
                             page += 1;
                         }
                         Err(e) => {
-                            debug!("[temurin] error fetching page for release [{}] {}", release, e);
+                            debug!("[temurin] error fetching page for release [{release}] {e}");
                             break;
                         }
                     }
@@ -94,7 +94,7 @@ fn map_release(release: &Release) -> Vec<JvmData> {
 
         let java_jvm_data = JvmData {
             architecture: normalize_architecture(binary.architecture.as_str()),
-            checksum: package_checksum.and_then(|c| format!("sha256:{}", c).into()),
+            checksum: package_checksum.and_then(|c| format!("sha256:{c}").into()),
             checksum_url: package_checksum_link,
             image_type: binary.image_type.clone(),
             features: normalize_features(binary.clone()),

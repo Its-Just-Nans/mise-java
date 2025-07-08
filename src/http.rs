@@ -78,7 +78,7 @@ impl Client {
 fn with_github_auth(url: &Url, mut req: RequestBuilder) -> RequestBuilder {
     if url.host_str() == Some("api.github.com") {
         if let Ok(token) = std::env::var("GITHUB_TOKEN") {
-            req = req.header("authorization", format!("token {}", token));
+            req = req.header("authorization", format!("token {token}"));
             req = req.header("x-github-api-version", "2022-11-28");
         }
     }

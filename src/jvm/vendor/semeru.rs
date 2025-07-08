@@ -51,7 +51,7 @@ impl Vendor for Semeru {
                 .filter(|release| !release.prerelease)
                 .flat_map(|release| {
                     map_release(&release).unwrap_or_else(|err| {
-                        warn!("[semeru] failed to map release: {}", err);
+                        warn!("[semeru] failed to map release: {err}");
                         vec![]
                     })
                 })
@@ -74,7 +74,7 @@ fn map_release(release: &GitHubRelease) -> Result<Vec<JvmData>> {
         .filter_map(|asset| match map_asset(release, asset) {
             Ok(meta) => Some(meta),
             Err(e) => {
-                warn!("[semeru] {}", e);
+                warn!("[semeru] {e}");
                 None
             }
         })
@@ -145,7 +145,7 @@ fn version_from_tag(tag: &str) -> Result<String> {
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[semeru] parsing name: {}", name);
+    debug!("[semeru] parsing name: {name}");
     match name {
         name if name.ends_with(".rpm") => meta_from_name_rpm(name),
         _ => meta_from_name_other(name),
@@ -155,7 +155,7 @@ fn meta_from_name(name: &str) -> Result<FileNameMeta> {
 fn meta_from_name_other(name: &str) -> Result<FileNameMeta> {
     let capture = regex!(r"^ibm-semeru-(?:open|certified)-(jre|jdk)_(x64|x86-32|x86-64|x86_64|s390x|ppc64|ppc64le|aarch64)_(aix|linux|mac|windows)_(?:.+_openj9-)?.+\.(tar\.gz|zip|msi)$")
         .captures(name)
-        .ok_or_else(|| eyre::eyre!("regular expression failed for name: {}", name))?;
+        .ok_or_else(|| eyre::eyre!("regular expression failed for name: {name}"))?;
 
     let image_type = capture.get(1).unwrap().as_str().to_string();
     let arch = capture.get(2).unwrap().as_str().to_string();
@@ -174,7 +174,7 @@ fn meta_from_name_rpm(name: &str) -> Result<FileNameMeta> {
     let capture =
         regex!(r"^ibm-semeru-(?:open|certified)-[0-9]+-(jre|jdk)-(.+)\.(x86_64|s390x|ppc64|ppc64le|aarch64)\.rpm$")
             .captures(name)
-            .ok_or_else(|| eyre::eyre!("regular expression failed for name: {}", name))?;
+            .ok_or_else(|| eyre::eyre!("regular expression failed for name: {name}"))?;
 
     let os = "linux".to_string();
     let image_type = capture.get(1).unwrap().as_str().to_string();

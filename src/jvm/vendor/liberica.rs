@@ -37,7 +37,7 @@ impl Vendor for Liberica {
             .into_par_iter()
             .flat_map(|release| {
                 map_release(&release).unwrap_or_else(|err| {
-                    warn!("[liberica] error parsing release: {}", err);
+                    warn!("[liberica] error parsing release: {err}");
                     vec![]
                 })
             })
@@ -60,7 +60,7 @@ fn map_release(release: &GitHubRelease) -> Result<Vec<JvmData>> {
         .filter_map(|asset| match map_asset(release, asset, &sha1sums) {
             Ok(meta) => Some(meta),
             Err(e) => {
-                warn!("[liberica] {}", e);
+                warn!("[liberica] {e}");
                 None
             }
         })
@@ -122,7 +122,7 @@ fn get_sha1sums(release: &GitHubRelease) -> Result<HashMap<String, String>> {
                 if parts.len() >= 2 {
                     Some((parts[1].to_string(), parts[0].to_string()))
                 } else {
-                    warn!("[liberica] malformed SHA1 line: {}", line);
+                    warn!("[liberica] malformed SHA1 line: {line}");
                     None
                 }
             })
@@ -136,12 +136,12 @@ fn get_sha1sums(release: &GitHubRelease) -> Result<HashMap<String, String>> {
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[liberica] parsing name: {}", name);
+    debug!("[liberica] parsing name: {name}");
     let capture = regex!(
         r"^bellsoft-(jre|jdk)(.+)-(?:ea-)?(linux|windows|macos|solaris)-(amd64|i386|i586|aarch64|arm64|ppc64le|arm32-vfp-hflt|x64|sparcv9|riscv64)-?(fx|lite|full|musl|musl-lite|crac|musl-crac|leyden|musl-leyden|lite-leyden|musl-lite-leyden)?\.(apk|deb|rpm|msi|dmg|pkg|tar\.gz|zip)$"
     )
     .captures(name)
-    .ok_or_else(|| eyre::eyre!("regular expression did not match name: {}", name))?;
+    .ok_or_else(|| eyre::eyre!("regular expression did not match name: {name}"))?;
 
     let image_type = capture.get(1).map_or("jdk", |m| m.as_str()).to_string();
     let version = capture.get(2).unwrap().as_str().to_string();

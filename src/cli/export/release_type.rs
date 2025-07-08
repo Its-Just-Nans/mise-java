@@ -85,11 +85,11 @@ impl ReleaseType {
                         .collect::<Vec<Map<String, Value>>>();
                     let size = export_data.len();
 
-                    info!("exporting {} records to {}/{}/{}.json", size, release_type, os, arch);
+                    info!("exporting {size} records to {release_type}/{os}/{arch}.json");
                     let path = PathBuf::from(&export_path)
                         .join(release_type)
                         .join(os)
-                        .join(format!("{}.json", arch));
+                        .join(format!("{arch}.json"));
                     if let Some(parent) = path.parent() {
                         std::fs::create_dir_all(parent)?;
                     }

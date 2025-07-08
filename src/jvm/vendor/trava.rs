@@ -39,7 +39,7 @@ impl Vendor for Trava {
                 .into_par_iter()
                 .flat_map(|release| {
                     map_release(version, &release).unwrap_or_else(|err| {
-                        warn!("[trava] failed to map release: {}", err);
+                        warn!("[trava] failed to map release: {err}");
                         vec![]
                     })
                 })
@@ -62,7 +62,7 @@ fn map_release(version: &str, release: &GitHubRelease) -> Result<Vec<JvmData>> {
         .filter_map(|asset| match map_asset(release, asset, version) {
             Ok(meta) => Some(meta),
             Err(e) => {
-                warn!("[trava] {}", e);
+                warn!("[trava] {e}");
                 None
             }
         })
@@ -131,10 +131,10 @@ fn meta_from_name(version: &str, name: &str) -> Result<FileNameMeta> {
 }
 
 fn meta_from_name_8(name: &str) -> Result<FileNameMeta> {
-    debug!("[trava] parsing name: {}", name);
+    debug!("[trava] parsing name: {name}");
     let capture = regex!(r"^java8-openjdk-dcevm-(linux|osx|windows)\.(.*)$")
         .captures(name)
-        .ok_or_else(|| eyre::eyre!("regular expression failed for name: {}", name))?;
+        .ok_or_else(|| eyre::eyre!("regular expression failed for name: {name}"))?;
 
     let arch = "x86_64".to_string();
     let os = capture.get(1).unwrap().as_str().to_string();
@@ -144,10 +144,10 @@ fn meta_from_name_8(name: &str) -> Result<FileNameMeta> {
 }
 
 fn meta_from_name_11(name: &str) -> Result<FileNameMeta> {
-    debug!("[trava] parsing name: {}", name);
+    debug!("[trava] parsing name: {name}");
     let capture = regex!(r"^(?:java11-openjdk|Openjdk11u)-dcevm-(linux|osx|mac|windows)-?(amd64|arm64|x64)?\.(.*)$")
         .captures(name)
-        .ok_or_else(|| eyre::eyre!("regular expression failed for name: {}", name))?;
+        .ok_or_else(|| eyre::eyre!("regular expression failed for name: {name}"))?;
 
     let os = capture.get(1).unwrap().as_str().to_string();
     let arch = capture.get(2).map_or("x86_64", |m| m.as_str()).to_string();

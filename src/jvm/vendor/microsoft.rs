@@ -42,7 +42,7 @@ impl Vendor for Microsoft {
                 let releases_html = match HTTP.get_text(url) {
                     Ok(releases_html) => releases_html,
                     Err(e) => {
-                        error!("[microsoft] error fetching releases: {}", e);
+                        error!("[microsoft] error fetching releases: {e}");
                         "".to_string()
                     }
                 };
@@ -59,7 +59,7 @@ impl Vendor for Microsoft {
             .flat_map(|anchor| match map_release(&anchor) {
                 Ok(release) => vec![release],
                 Err(e) => {
-                    warn!("[microsoft] {}", e);
+                    warn!("[microsoft] {e}");
                     vec![]
                 }
             })
@@ -73,7 +73,7 @@ fn map_release(a: &AnchorElement) -> Result<JvmData> {
     let filename_meta = meta_from_name(&a.name)?;
     let sha256_url = format!("{}.sha256sum.txt", &a.href);
     let sha256 = match HTTP.get_text(&sha256_url) {
-        Ok(sha) => sha.split_whitespace().next().map(|s| format!("sha256:{}", s)),
+        Ok(sha) => sha.split_whitespace().next().map(|s| format!("sha256:{s}")),
         Err(_) => {
             warn!("[microsoft] unable to find SHA256 for {}", a.name);
             None
@@ -104,7 +104,7 @@ fn map_release(a: &AnchorElement) -> Result<JvmData> {
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[microsoft] parsing name: {}", name);
+    debug!("[microsoft] parsing name: {name}");
     let capture = regex!(r"^microsoft-jdk-([0-9+.]{3,})-?.*-(alpine|linux|macos|macOS|windows)-(x64|aarch64)\.(.*)$")
         .captures(name)
         .ok_or_else(|| eyre::eyre!("regular expression did not match for {}", name))?;

@@ -39,7 +39,7 @@ impl Vendor for Corretto {
                 .into_par_iter()
                 .flat_map(|release| {
                     map_release(&release).unwrap_or_else(|err| {
-                        warn!("[corretto] failed to map release: {}", err);
+                        warn!("[corretto] failed to map release: {err}");
                         vec![]
                     })
                 })
@@ -106,7 +106,7 @@ fn process_download_link(jvm: &mut JvmData, fragment: &Html) {
             jvm.url = url.to_string();
             jvm.version = normalize_version(&meta.version);
         } else {
-            error!("[corretto] failed to parse metadata for {}", name);
+            error!("[corretto] failed to parse metadata for {name}");
         }
     }
 }
@@ -117,15 +117,15 @@ fn process_checksum(jvm: &mut JvmData, fragment: &Html) {
         .select(&code_selector)
         .map(|code| code.text().collect::<String>());
     if let Some(md5) = codes.next() {
-        jvm.checksum = Some(format!("md5:{}", md5));
+        jvm.checksum = Some(format!("md5:{md5}"));
     }
     if let Some(sha256) = codes.next() {
-        jvm.checksum = Some(format!("sha256:{}", sha256));
+        jvm.checksum = Some(format!("sha256:{sha256}"));
     }
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[corretto] parsing name: {}", name);
+    debug!("[corretto] parsing name: {name}");
     let capture = regex!(r".*?-corretto(-devel|-jdk)?[\-_]([\w\d._]+(-\d)?)-?(alpine-linux|linux|macosx|windows)?[._\-](amd64|arm64|armv7|aarch64|x64|i386|x86|x86_64)(-(jdk|jre|musl-headless))?\.(.*)")
     .captures(name)
     .ok_or_else(|| eyre::eyre!("regular expression did not match for {}", name))?;

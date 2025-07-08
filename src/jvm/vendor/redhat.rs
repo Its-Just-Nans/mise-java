@@ -22,7 +22,7 @@ impl Vendor for RedHat {
     fn fetch_data(&self, jvm_data: &mut HashSet<JvmData>) -> Result<()> {
         // get available releases
         let api_releases_url = "https://marketplace-api.adoptium.net/v1/info/available_releases/redhat";
-        debug!("[redhat] fetching releases [{}]", api_releases_url);
+        debug!("[redhat] fetching releases [{api_releases_url}]");
         let releases = HTTP.get_json::<AvailableReleases, _>(api_releases_url)?;
 
         // get meta data for a specific release
@@ -41,7 +41,7 @@ impl Vendor for RedHat {
                         &sort_order=ASC",
                         page = page, page_size = page_size, release = release,
                     };
-                    debug!("[redhat] fetching release [{}] page [{}]", release, page);
+                    debug!("[redhat] fetching release [{release}] page [{page}]");
                     match HTTP.get_json::<Vec<Release>, _>(api_url) {
                         Ok(resp) => {
                             resp.iter().for_each(|release| {
@@ -54,7 +54,7 @@ impl Vendor for RedHat {
                             page += 1;
                         }
                         Err(e) => {
-                            debug!("[redhat] error fetching page for release [{}] {}", release, e);
+                            debug!("[redhat] error fetching page for release [{release}] {e}");
                             break;
                         },
                     }
@@ -81,7 +81,7 @@ fn map_release(release: &Release) -> Vec<JvmData> {
         for artifact in artifacts {
             let java_jvm_data = JvmData {
                 architecture: normalize_architecture(binary.architecture.as_str()),
-                checksum: artifact.checksum.and_then(|c| format!("sha256:{}", c).into()),
+                checksum: artifact.checksum.and_then(|c| format!("sha256:{c}").into()),
                 checksum_url: artifact.checksum_link,
                 image_type: binary.image_type.clone(),
                 features: None,

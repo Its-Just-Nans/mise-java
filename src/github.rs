@@ -38,7 +38,7 @@ pub fn list_releases(repo: &str) -> Result<Vec<GitHubRelease>> {
             Ok(result) => result,
             Err(err) => {
                 // GitHub API returns 422 if more than 1000 releases are requested
-                error!("failed to fetch release page: {}", err);
+                error!("failed to fetch release page: {err}");
                 break;
             }
         };

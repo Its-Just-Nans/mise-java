@@ -39,7 +39,7 @@ impl Vendor for Kona {
                 .into_par_iter()
                 .flat_map(|release| {
                     map_release(&release).unwrap_or_else(|err| {
-                        warn!("[kona] failed to map release: {}", err);
+                        warn!("[kona] failed to map release: {err}");
                         vec![]
                     })
                 })
@@ -62,7 +62,7 @@ fn map_release(release: &GitHubRelease) -> Result<Vec<JvmData>> {
         .filter_map(|asset| match map_asset(asset) {
             Ok(meta) => Some(meta),
             Err(e) => {
-                warn!("[kona] {}", e);
+                warn!("[kona] {e}");
                 None
             }
         })
@@ -143,10 +143,10 @@ fn get_md5(asset: &GitHubAsset, md5_url: &str) -> Option<String> {
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[kona] parsing name: {}", name);
+    debug!("[kona] parsing name: {name}");
     let capture = regex!(r"^TencentKona-?([0-9b.]{1,})(?:[_-](ea))?[-_]jdk_(?:(fiber|vector-api)_)?(linux[-_]musl|linux|macosx|windows)-(aarch64|x86_64)(?:_8u\d+)?(?:_(notarized|signed))?\.(tar\.gz|zip)$")
         .captures(name)
-        .ok_or_else(|| eyre::eyre!("regular expression did not match name: {}", name))?;
+        .ok_or_else(|| eyre::eyre!("regular expression did not match name: {name}"))?;
 
     let version = capture.get(1).unwrap().as_str().to_string();
     let features_1 = capture.get(3).map_or("", |m| m.as_str());
@@ -158,7 +158,7 @@ fn meta_from_name(name: &str) -> Result<FileNameMeta> {
     Ok(FileNameMeta {
         arch,
         ext,
-        features: format!("{} {}", features_1, features_2).trim().to_string(),
+        features: format!("{features_1} {features_2}").trim().to_string(),
         os,
         version,
     })

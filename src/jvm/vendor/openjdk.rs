@@ -35,7 +35,7 @@ impl Vendor for OpenJDK {
             let releases_html = match HTTP.get_text(url) {
                 Ok(releases_html) => releases_html,
                 Err(e) => {
-                    error!("[openjdk] error fetching releases: {}", e);
+                    error!("[openjdk] error fetching releases: {e}");
                     "".to_string()
                 }
             };
@@ -48,7 +48,7 @@ impl Vendor for OpenJDK {
             .filter_map(|anchor| match map_release(&anchor) {
                 Ok(release) => Some(release),
                 Err(e) => {
-                    warn!("[openjdk] {}", e);
+                    warn!("[openjdk] {e}");
                     None
                 }
             })
@@ -74,7 +74,7 @@ fn map_release(a: &AnchorElement) -> Result<JvmData> {
     };
     let sha256_url = format!("{}.sha256", &a.href);
     let sha256 = match HTTP.get_text(&sha256_url) {
-        Ok(sha) => sha.split_whitespace().next().map(|s| format!("sha256:{}", s)),
+        Ok(sha) => sha.split_whitespace().next().map(|s| format!("sha256:{s}")),
         Err(_) => {
             warn!("[openjdk] unable to find SHA256 for {name}");
             None
@@ -101,7 +101,7 @@ fn map_release(a: &AnchorElement) -> Result<JvmData> {
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[oracle] parsing name: {}", name);
+    debug!("[oracle] parsing name: {name}");
     let capture =
         regex!(r"^openjdk-([0-9]{1,}[^_]*)_(linux|osx|macos|windows)-(aarch64|x64-musl|x64)_bin\.(tar\.gz|zip)$")
             .captures(name)

@@ -37,27 +37,27 @@ impl Fetch {
                     let db = match JvmRepository::new(conn_pool) {
                         Ok(db) => db,
                         Err(err) => {
-                            error!("[{}] failed to connect to database: {}", name, err);
+                            error!("[{name}] failed to connect to database: {err}");
                             return;
                         }
                     };
 
-                    info!("[{}] fetching meta data", name);
+                    info!("[{name}] fetching meta data");
                     let jvm_data = match vendor.fetch() {
                         Ok(data) => data,
                         Err(err) => {
-                            error!("[{}] failed to fetch meta data: {}", name, err);
+                            error!("[{name}] failed to fetch meta data: {err}");
                             return;
                         }
                     };
 
-                    info!("[{}] writing to database", name);
+                    info!("[{name}] writing to database");
                     match db.insert(&jvm_data) {
                         Ok(result) => {
-                            info!("[{}] inserted/modified {} records", name, result)
+                            info!("[{name}] inserted/modified {result} records")
                         }
                         Err(err) => {
-                            error!("[{}] failed to write to database: {}", name, err);
+                            error!("[{name}] failed to write to database: {err}");
                         }
                     };
                 });

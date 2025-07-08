@@ -34,7 +34,7 @@ impl Vendor for OracleGraalVM {
           let releases_html = match HTTP.get_text(&url) {
               Ok(releases_html) => releases_html,
               Err(e) => {
-                  error!("[oracle-graalvm] error fetching releases: {}", e);
+                  error!("[oracle-graalvm] error fetching releases: {e}");
                   "".to_string()
               }
           };
@@ -54,7 +54,7 @@ impl Vendor for OracleGraalVM {
             .flat_map(|anchor| match map_release(&anchor) {
                 Ok(release) => vec![release],
                 Err(e) => {
-                    warn!("[oracle-graalvm] {}", e);
+                    warn!("[oracle-graalvm] {e}");
                     vec![]
                 }
             })
@@ -74,7 +74,7 @@ fn map_release(a: &AnchorElement) -> Result<JvmData> {
     let filename_meta = meta_from_name(&name)?;
     let sha256_url = format!("{}.sha256", &a.href);
     let sha256 = match HTTP.get_text(&sha256_url) {
-        Ok(sha256) => sha256.split_whitespace().next().map(|s| format!("sha256:{}", s)),
+        Ok(sha256) => sha256.split_whitespace().next().map(|s| format!("sha256:{s}")),
         Err(_) => {
             warn!("[oracle-graalvm] unable to find SHA256 for {name}");
             None
@@ -125,14 +125,14 @@ fn replace_with_latest_version(anchor: &mut AnchorElement, latest_versions: &[St
             })
             .map(|v| {
                 let major = v.split('.').next().unwrap_or("");
-                anchor.name.replace(&format!("jdk-{}_", major), &format!("jdk-{}_", &v))
+                anchor.name.replace(&format!("jdk-{major}_"), &format!("jdk-{}_", &v))
             })
             .unwrap_or_else(|| anchor.name.clone());
     }
 }
 
 fn meta_from_name(name: &str) -> Result<FileNameMeta> {
-    debug!("[oracle-graalvm] parsing name: {}", name);
+    debug!("[oracle-graalvm] parsing name: {name}");
     let capture = regex!(
         r"^graalvm-jdk-([0-9+.]{2,})_(linux|macos|windows)-(x64|aarch64)_bin\.(tar\.gz|zip|msi|dmg|exe|deb|rpm)$"
     )
@@ -244,8 +244,7 @@ mod test {
         ] {
             assert!(
                 meta_from_name(invalid_name).is_err(),
-                "Expected an error for invalid file name: {}",
-                invalid_name
+                "Expected an error for invalid file name: {invalid_name}",
             );
         }
     }
