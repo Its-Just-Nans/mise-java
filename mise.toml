@@ -49,6 +49,15 @@ run = '''
 cargo run -- fetch
 '''
 
+[tasks."fetch:vendor"]
+usage = '''
+arg <vendor> "Vendor to fetch (e.g. temurin)"
+complete "vendor" run="cargo run -- ls vendor"
+'''
+run = '''
+cargo run -- fetch {{arg(name="vendor")}}
+'''
+
 [tasks."export:release-type"]
 run = '''
 cargo run -- export release-type --pretty -o linux,macosx,windows -a aarch64,arm32,i686,x86_64

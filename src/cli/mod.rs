@@ -4,22 +4,25 @@ use indoc::indoc;
 
 mod export;
 mod fetch;
+mod ls;
 pub mod version;
 
 pub struct Cli {}
 
 #[derive(Debug, Subcommand)]
 pub enum Commands {
-    Fetch(fetch::Fetch),
     Export(export::Export),
+    Fetch(fetch::Fetch),
+    Ls(ls::Ls),
     Version(version::Version),
 }
 
 impl Commands {
     pub fn run(self) -> Result<()> {
         match self {
-            Self::Fetch(cmd) => cmd.run(),
             Self::Export(cmd) => cmd.run(),
+            Self::Fetch(cmd) => cmd.run(),
+            Self::Ls(cmd) => cmd.run(),
             Self::Version(cmd) => cmd.run(),
         }
     }
