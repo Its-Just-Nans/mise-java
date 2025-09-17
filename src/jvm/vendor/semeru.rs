@@ -41,6 +41,8 @@ impl Vendor for Semeru {
             "21-certified",
             "22",
             "23",
+            "24",
+            "25",
         ] {
             debug!("[semeru] fetching releases for version: {version}");
 
