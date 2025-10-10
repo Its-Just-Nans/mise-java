@@ -37561,17 +37561,6 @@
     "version": "21.0.8"
   },
   {
-    "checksum": "sha256:a70785104855c181f2b56993d117e0e991eab6bd6dde99c32c2c5af857756653",
-    "features": [],
-    "file_type": "zip",
-    "image_type": "jdk",
-    "java_version": "24.0.2",
-    "jvm_impl": "hotspot",
-    "url": "https://download.oracle.com/graalvm/24/latest/graalvm-jdk-24_windows-x64_bin.zip",
-    "vendor": "oracle-graalvm",
-    "version": "24.0.2"
-  },
-  {
     "checksum": "sha256:683aad49e0a146c725d922efeaffe877deb108e58ee270ac5529467cf9bdd7ec",
     "features": [],
     "file_type": "zip",
@@ -40501,5 +40490,27 @@
     "url": "https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-21.0.8-windows-x64-b1148.57.tar.gz",
     "vendor": "jetbrains",
     "version": "21.0.8-b1148.57"
+  },
+  {
+    "checksum": "sha256:26388e7e448ba3341102ddfa29a3f514b2449e5876de26641b9fefb3cee2e584",
+    "features": [],
+    "file_type": "zip",
+    "image_type": "jdk",
+    "java_version": "25.0.0",
+    "jvm_impl": "hotspot",
+    "url": "https://download.oracle.com/graalvm/25/latest/graalvm-jdk-25_windows-x64_bin.zip",
+    "vendor": "oracle-graalvm",
+    "version": "25.0.0"
+  },
+  {
+    "checksum": "sha256:a70785104855c181f2b56993d117e0e991eab6bd6dde99c32c2c5af857756653",
+    "features": [],
+    "file_type": "zip",
+    "image_type": "jdk",
+    "java_version": "24.0.2",
+    "jvm_impl": "hotspot",
+    "url": "https://download.oracle.com/graalvm/24/archive/graalvm-jdk-24_windows-x64_bin.zip",
+    "vendor": "oracle-graalvm",
+    "version": "24.0.2"
   }
 ]

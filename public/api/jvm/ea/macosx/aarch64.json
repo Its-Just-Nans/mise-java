@@ -17198,5 +17198,38 @@
     "url": "https://github.com/SAP/SapMachine/releases/download/sapmachine-21.0.9%2B9/sapmachine-jdk-21.0.9-ea.9_macos-aarch64_bin.tar.gz",
     "vendor": "sapmachine",
     "version": "21.0.9-ea.9"
+  },
+  {
+    "checksum": "sha256:dabd1436a6f1568c1c192c50c83914bfc759ce660790af32a07a4396f6fed9c0",
+    "features": [],
+    "file_type": "zip",
+    "image_type": "jdk",
+    "java_version": "26.0.0",
+    "jvm_impl": "hotspot",
+    "url": "https://cdn.azul.com/zulu/bin/zulu26.0.21-beta-jdk26.0.0-beta.16-macosx_aarch64.zip",
+    "vendor": "zulu",
+    "version": "26.0.21.0"
+  },
+  {
+    "checksum": "sha256:8240f9e5c900cd2b45b9b642655807468878150629768687d9c8439b726c9fcd",
+    "features": [],
+    "file_type": "tar.gz",
+    "image_type": "jdk",
+    "java_version": "26.0.0",
+    "jvm_impl": "hotspot",
+    "url": "https://cdn.azul.com/zulu/bin/zulu26.0.21-beta-jdk26.0.0-beta.16-macosx_aarch64.tar.gz",
+    "vendor": "zulu",
+    "version": "26.0.21.0"
+  },
+  {
+    "checksum": "sha256:b723001f467ffeb6421795aff8edc46e40ebdc57cd135ebc13df9eab6d79cf1c",
+    "features": [],
+    "file_type": "tar.gz",
+    "image_type": "jdk",
+    "java_version": "26.0.0-ea+19",
+    "jvm_impl": "hotspot",
+    "url": "https://download.java.net/java/early_access/jdk26/19/GPL/openjdk-26-ea+19_macos-aarch64_bin.tar.gz",
+    "vendor": "openjdk",
+    "version": "26.0.0-ea+19"
   }
 ]

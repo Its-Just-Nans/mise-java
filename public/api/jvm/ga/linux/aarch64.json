@@ -38960,17 +38960,6 @@
     "version": "8.88.0.19"
   },
   {
-    "checksum": "sha256:76f2557f32e8cfbe6d8b7bbf331f0f092ebbe1cc36a2678e098305892076298b",
-    "features": [],
-    "file_type": "tar.gz",
-    "image_type": "jdk",
-    "java_version": "24.0.2",
-    "jvm_impl": "hotspot",
-    "url": "https://download.oracle.com/graalvm/24/latest/graalvm-jdk-24_linux-aarch64_bin.tar.gz",
-    "vendor": "oracle-graalvm",
-    "version": "24.0.2"
-  },
-  {
     "checksum": "sha256:aa1100beb3377717a0ba1937e51878c48917615922a36c4508baf46927a9a6e4",
     "features": [],
     "file_type": "tar.gz",
@@ -38991,6 +38980,17 @@
     "url": "https://download.oracle.com/graalvm/21/archive/graalvm-jdk-21.0.7_linux-aarch64_bin.tar.gz",
     "vendor": "oracle-graalvm",
     "version": "21.0.7"
+  },
+  {
+    "checksum": "sha256:76f2557f32e8cfbe6d8b7bbf331f0f092ebbe1cc36a2678e098305892076298b",
+    "features": [],
+    "file_type": "tar.gz",
+    "image_type": "jdk",
+    "java_version": "24.0.2",
+    "jvm_impl": "hotspot",
+    "url": "https://download.oracle.com/graalvm/24/archive/graalvm-jdk-24_linux-aarch64_bin.tar.gz",
+    "vendor": "oracle-graalvm",
+    "version": "24.0.2"
   },
   {
     "checksum": "sha256:1c2164216387c2f5cbacc7e96ecaa51168d954ac3805312b0a7d4d1e2726f58a",
@@ -43223,5 +43223,16 @@
     "url": "https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk_lb-21.0.8-linux-aarch64-b1148.57.tar.gz",
     "vendor": "jetbrains",
     "version": "21.0.8-b1148.57"
+  },
+  {
+    "checksum": "sha256:a468ab5483d74f3d29dfdaa9c9b29b29261a3a9e49786d21c4a9c00b06c156ea",
+    "features": [],
+    "file_type": "tar.gz",
+    "image_type": "jdk",
+    "java_version": "25.0.0",
+    "jvm_impl": "hotspot",
+    "url": "https://download.oracle.com/graalvm/25/latest/graalvm-jdk-25_linux-aarch64_bin.tar.gz",
+    "vendor": "oracle-graalvm",
+    "version": "25.0.0"
   }
 ]
