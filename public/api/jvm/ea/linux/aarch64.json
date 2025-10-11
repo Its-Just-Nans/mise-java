@@ -19878,5 +19878,27 @@
     "url": "https://github.com/SAP/SapMachine/releases/download/sapmachine-17.0.17%2B9/sapmachine-jre-17.0.17-ea.9_linux-aarch64_bin.tar.gz",
     "vendor": "sapmachine",
     "version": "17.0.17-ea.9"
+  },
+  {
+    "checksum": "sha256:9136a4b043097ed8614de3648f79d33f1d314505f1227260d1e397605b480a3d",
+    "features": [],
+    "file_type": "tar.gz",
+    "image_type": "jdk",
+    "java_version": "26.0.0",
+    "jvm_impl": "hotspot",
+    "url": "https://cdn.azul.com/zulu/bin/zulu26.0.21-beta-jdk26.0.0-beta.16-linux_aarch64.tar.gz",
+    "vendor": "zulu",
+    "version": "26.0.21.0"
+  },
+  {
+    "checksum": "sha256:2841b9fa0e22671fc0ee3e6ba1e87237d895446e7548021004f201a1ff5abd99",
+    "features": [],
+    "file_type": "tar.gz",
+    "image_type": "jdk",
+    "java_version": "26.0.0-ea+19",
+    "jvm_impl": "hotspot",
+    "url": "https://download.java.net/java/early_access/jdk26/19/GPL/openjdk-26-ea+19_linux-aarch64_bin.tar.gz",
+    "vendor": "openjdk",
+    "version": "26.0.0-ea+19"
   }
 ]

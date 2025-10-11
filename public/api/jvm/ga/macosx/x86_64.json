@@ -46989,7 +46989,7 @@
     "image_type": "jdk",
     "java_version": "24.0.2",
     "jvm_impl": "hotspot",
-    "url": "https://download.oracle.com/graalvm/24/latest/graalvm-jdk-24_macos-x64_bin.tar.gz",
+    "url": "https://download.oracle.com/graalvm/24/archive/graalvm-jdk-24_macos-x64_bin.tar.gz",
     "vendor": "oracle-graalvm",
     "version": "24.0.2"
   },
@@ -50615,5 +50615,16 @@
     "url": "https://cache-redirector.jetbrains.com/intellij-jbr/jbr-21.0.8-osx-x64-b1148.57.tar.gz",
     "vendor": "jetbrains",
     "version": "21.0.8-b1148.57"
+  },
+  {
+    "checksum": "sha256:f99e3eea4808a0b73b559e28c4646cf091df12d6a4c065fef34664ab17299137",
+    "features": [],
+    "file_type": "tar.gz",
+    "image_type": "jdk",
+    "java_version": "25.0.0",
+    "jvm_impl": "hotspot",
+    "url": "https://download.oracle.com/graalvm/25/latest/graalvm-jdk-25_macos-x64_bin.tar.gz",
+    "vendor": "oracle-graalvm",
+    "version": "25.0.0"
   }
 ]
