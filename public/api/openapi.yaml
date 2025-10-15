@@ -12,10 +12,6 @@ servers:
 tags:
   - name: "releaseType"
     description: Type of the JVM release (e.g., GA, EA).
-  - name: "os"
-    description: Operating system for which the JVM is built (e.g., Linux, Windows, macOS).
-  - name: "architecture"
-    description: CPU architecture supported by the JVM (e.g., x86_64, aarch64).
 paths:
   /jvm/{releaseType}/{operatingSystem}/{architecture}.json:
     get:
@@ -23,8 +19,6 @@ paths:
       description: "Find JVM releases by release type, operating system, and architecture"
       tags:
         - "releaseType"
-        - "os"
-        - "architecture"
       parameters:
         - in: "path"
           name: "architecture"
