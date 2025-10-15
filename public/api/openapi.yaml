@@ -3,14 +3,28 @@ info:
   version: "1.0.0"
   title: "JVM Data API"
   description: "JVM Data of various JVM distributions"
+  contact:
+    name: "roele"
+    url: "https://roele.dev"
 servers:
-  - url: "https://mise-java.jdx.dev/"
-  #- url: "https://d2177wdtr9qui6.cloudfront.net/"
+  - url: "https://mise-java.jdx.dev"
+  #- url: "https://d2177wdtr9qui6.cloudfront.net"
+tags:
+  - name: "releaseType"
+    description: Type of the JVM release (e.g., GA, EA).
+  - name: "os"
+    description: Operating system for which the JVM is built (e.g., Linux, Windows, macOS).
+  - name: "architecture"
+    description: CPU architecture supported by the JVM (e.g., x86_64, aarch64).
 paths:
-  /jvm/{release_type}/{operating_system}/{architecture}.json:
+  /jvm/{releaseType}/{operatingSystem}/{architecture}.json:
     get:
       operationId: "findByReleaseTypeOsArch"
-      description: ""
+      description: "Find JVM releases by release type, operating system, and architecture"
+      tags:
+        - "releaseType"
+        - "os"
+        - "architecture"
       parameters:
         - in: "path"
           name: "architecture"
@@ -18,23 +32,23 @@ paths:
           schema:
             $ref: '#/components/schemas/architectures'
         - in: "path"
-          name: "operating_system"
+          name: "operatingSystem"
           required: true
           schema:
-            $ref: '#/components/schemas/operating_systems'
+            $ref: '#/components/schemas/operatingSystems'
         - in: "path"
-          name: "release_type"
+          name: "releaseType"
           required: true
           schema:
-            $ref: '#/components/schemas/release_types'
+            $ref: '#/components/schemas/releaseTypes'
       responses:
-        200:
+        '200':
           description: "JVM data for the specified release type, operating system, and architecture"
           content:
             "application/json":
               schema:
                 $ref: '#/components/schemas/response'
-        404:
+        '404':
           description: "Not found"
           content:
             "text/html":
@@ -72,7 +86,7 @@ components:
         - "graalvm"
         - "hotspot"
         - "openj9"
-    operating_systems:
+    operatingSystems:
       type: "string"
       description: "Operating system of the JVM"
       enum: 
@@ -81,7 +95,7 @@ components:
         - "macosx"
         #- "solaris"
         - "windows"
-    release_types:
+    releaseTypes:
       type: "string"
       description: "Release type of the JVM"
       enum: 
@@ -150,9 +164,9 @@ components:
         jvm_impl:
           $ref: '#/components/schemas/jvm_impls'
         os:
-          $ref: '#/components/schemas/operating_systems'
-        release_type:
-          $ref: '#/components/schemas/release_types'
+          $ref: '#/components/schemas/operatingSystems'
+        releaseType:
+          $ref: '#/components/schemas/releaseTypes'
         size:
           description: "Size of the artefact in bytes"
           type: "number"
