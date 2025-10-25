@@ -3,7 +3,7 @@ use std::{
     sync::{Arc, LazyLock},
 };
 
-use comrak::{ComrakOptions, markdown_to_html};
+use comrak::{Options, markdown_to_html};
 use eyre::Result;
 use indoc::formatdoc;
 use log::info;
@@ -23,7 +23,6 @@ pub mod mandrel;
 pub mod microsoft;
 pub mod openjdk;
 pub mod oracle;
-pub mod oracle_graalvm;
 pub mod redhat;
 pub mod sapmachine;
 pub mod semeru;
@@ -44,7 +43,6 @@ pub static VENDORS: LazyLock<Vec<Arc<dyn Vendor>>> = LazyLock::new(|| {
         Arc::new(microsoft::Microsoft {}),
         Arc::new(openjdk::OpenJDK {}),
         Arc::new(oracle::Oracle {}),
-        Arc::new(oracle_graalvm::OracleGraalVM {}),
         Arc::new(redhat::RedHat {}),
         Arc::new(sapmachine::SAPMachine {}),
         Arc::new(semeru::Semeru {}),
@@ -102,7 +100,7 @@ pub fn md_to_html(md: &str) -> String {
       markdown = md.replace("\\r\\n", "\n"),
     };
 
-    let mut options = ComrakOptions::default();
+    let mut options = Options::default();
     options.extension.table = true;
 
     markdown_to_html(&markdown_input, &options)

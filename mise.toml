@@ -1,6 +1,7 @@
 [tools]
 aws = "latest"
 "cargo:cargo-deny" = "0.17"
+"npm:@stoplight/spectral-cli" = "latest"
 
 [env]
 _.file = ".env.local"
@@ -11,13 +12,18 @@ cargo build --all-features
 '''
 
 [tasks.ci]
-depends = ["lint", "test", "check"]
+depends = ["lint*", "test", "check"]
 
 [tasks.lint]
 depends = ["build"]
 run = '''
 cargo fmt --all -- --check
 cargo clippy --all-targets --all-features -- -D warnings
+'''
+
+[tasks.lint-oas]
+run = '''
+spectral lint public/api/openapi.yaml
 '''
 
 [tasks.test]

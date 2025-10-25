@@ -116,7 +116,7 @@ fn meta_from_name(name: &str) -> Result<FileNameMeta> {
 }
 
 fn normalize_release_type(version: &str) -> String {
-    if version.contains("-ea")
+    if version.contains("ea")
         || version.contains("-leyden")
         || version.contains("-loom")
         || version.contains("-valhalla")
